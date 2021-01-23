@@ -1,0 +1,19 @@
+{% extends 'airmed/base.html' %}
+{% block content %}
+    <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">Airmed Team</a>
+            </div>
+            <h2><a class="article-title" >Targeted Training</a></h2>
+            <p class="article-content">Please select the muscle group you would like to train</p>
+          </div>
+        </article>
+        
+    <a class="btn btn-primary btn-block" href="{% url 'chest' %}" role="button"><span style="font-size:40px;">Chest</span></a>
+    <a class="btn btn-primary btn-block" href="{% url 'back' %}" role="button"><span style="font-size:40px;">Back</span></a>
+    <a class="btn btn-primary btn-block" href="{% url 'legs' %}" role="button"><span style="font-size:40px;">Legs</span></a>
+    <a class="btn btn-primary btn-block" href="{% url 'arms' %}" role="button"><span style="font-size:40px;">Arms</span></a>
+    
+
+{% endblock content %}

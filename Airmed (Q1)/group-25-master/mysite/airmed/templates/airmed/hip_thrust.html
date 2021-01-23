@@ -1,0 +1,88 @@
+{% extends "airmed/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">Airmed Team</a>
+            </div>
+            <h2><a class="article-title" >Hip Thrust</a></h2>
+              {% if  last_set == 0 %}
+            <p class="article-content"> You have not attempted this exercise yet.</p>
+              <a href="https://www.youtube.com/watch?v=xDmFkJxPzeM">Click here to view how to correctly perform the hip thrust</a>
+              {% else %}
+                  <p class="article-content">According to the data provided in your last session ({{lastDay}}), you performed {{last_set}} sets at a rep count of {{last_rep}}. You can view your one rep max progression in the graph below.</p>
+                    <a href="https://www.youtube.com/watch?v=xDmFkJxPzeM">Click here to view how to correctly perform the hip thrust</a>
+              {% endif %}
+          </div>
+        </article>
+   <div class="content-section">
+       <form method="POST">
+          {% csrf_token %}
+           <fieldset class="form-group">
+               <legend class="border-bottom mb-4">Hip Thrust Numbers Tracker</legend>
+               {{ exercise_form|crispy }}
+           </fieldset>
+           <div class="form-group">
+               <button class ="btn btn-outline-info" type="submit">Submit</button>
+           </div>
+       </form>
+   </div>
+    <div>
+        <canvas id="myChart" width="400" height="200"></canvas>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js" ></script>
+        <script>
+            // Global parameters:
+// do not resize the chart canvas when its container does (keep at 600x400px)
+Chart.defaults.global.responsive = true;
+Chart.defaults.global.legend.display = false;
+
+// define the chart data
+var chartData = {
+  labels : [{% for item in day %}
+             "{{item}}",
+            {% endfor %}],
+  datasets : [{
+      label: '{{ legend }}',
+      fill: false,
+      lineTension: 0.1,
+      backgroundColor: "rgba(85,107,47,0.4)",
+      borderColor: "rgb(85,107,47,1)",
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderJoinStyle: 'miter',
+      pointBorderColor: "rgba(85,107,47,1)",
+      pointBackgroundColor: "#fff",
+      pointBorderWidth: 1,
+      pointHoverRadius: 5,
+      pointHoverBackgroundColor: "rgba(85,107,47,1)",
+      pointHoverBorderColor: "rgba(220,220,220,1)",
+      pointHoverBorderWidth: 2,
+      pointRadius: 1,
+      pointHitRadius: 10,
+      data : [{% for item in onerepmax %}
+                {{item}},
+              {% endfor %}],
+      spanGaps: false
+  }]
+}
+
+// get chart canvas
+var ctx = document.getElementById("myChart").getContext("2d");
+
+// create the chart using the chart canvas
+var myChart = new Chart(ctx, {
+  type: 'line',
+  data: chartData,
+ options: {
+     title: {
+         display: true,
+         text: 'Your One Rep Max For The Hip Thrust',
+     }
+ }
+});
+
+        </script>
+    </div>
+{% endblock content%}

@@ -1,0 +1,19 @@
+{% extends 'airmed/base.html' %}
+{% block content %}
+
+    <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">Airmed Team</a>
+            </div>
+            <h2><a class="article-title" >Exercises</a></h2>
+            <p class="article-content">Select which exercise you would like to perform</p>
+          </div>
+    </article>
+
+    <a class="btn btn-primary btn-block" href="{% url 'bicep_curl' %}" role="button"><span style="font-size:40px;">Bicep Curl</span></a>
+    <a class="btn btn-primary btn-block" href="{% url 'tricep_extension' %}" role="button"><span style="font-size:40px;">Tricep Extension</span></a>
+    <a class="btn btn-primary btn-block" href="{% url 'skullcrusher' %}" role="button"><span style="font-size:40px;">Skullcrushers</span></a>
+
+    <a class="btn btn-primary btn-lg" href="{% url 'fitness-page' %}" role="button">Return</a>
+{% endblock content %}
